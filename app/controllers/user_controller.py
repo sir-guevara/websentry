@@ -1,33 +1,32 @@
-# from bson import ObjectId
+from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
+from passlib.context import CryptContext
 
-# from passlib.context import CryptContext
-
-# from app.database.connection import database
-# from app.models.user_model import UserCreate, UserInDB
+from app.database.connection import database as db
+from app.models.user_model import User, UserCreate
 
 router = APIRouter()
 
-# # Password hashing context
-# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# @router.post("/register", response_model=User)
-# async def register_user(user: UserCreate, db=Depends(database)):
-#     # Check if the username or email already exists
-#     existing_user = await db.users.find_one({"$or": [{"username": user.username}, {"email": user.email}]})
-#     if existing_user:
-#         raise HTTPException(status_code=400, detail="Username or email already registered")
+@router.post("/register")
+async def register_user(user: UserCreate):
+    # Check if the username or email already exists
+    existing_user = await db.users.find_one({"email": user.email})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username or email already registered")
 
-#     # Hash the password before saving to the database
-#     hashed_password = pwd_context.hash(user.password)
-#     user_dict = user.dict()
-#     user_dict.update({"hashed_password": hashed_password})
+    # Hash the password before saving to the database
+    hashed_password = pwd_context.hash(user.password)
+    user_dict = dict(user)
+    user_dict.update({"hashed_password": hashed_password})
 
-#     # Insert the user into the database
-#     result = await db.users.insert_one(user_dict)
-#     user.id = str(result.inserted_id)
+    # Insert the user into the database
+    result = await db.users.insert_one(user_dict)
+    # user.id = str(result.inserted_id)
 
-#     return user
+    return  result
 
 # @router.post("/login", response_model=User)
 # async def login_user(username: str, password: str, db=Depends(database)):

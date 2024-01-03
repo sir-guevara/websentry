@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 
 from app.config import PORT
-from app.database.connection import client
 
 # from app.main import app
 

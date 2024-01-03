@@ -2,9 +2,12 @@ from urllib.parse import quote_plus
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.config import DB_HOST, DB_NAME, DB_PASSWORD, DB_USERNAME
+from app.config import DB_HOST, DB_NAME, DB_PASSWORD, DB_USERNAME, DEBUG
 
-DATABASE_URI = f"mongodb://{quote_plus(DB_USERNAME)}:{quote_plus(DB_PASSWORD)}@{DB_HOST}/{DB_NAME}"
+if DEBUG:
+    DATABASE_URI = f"mongodb://localhost:27017/{DB_NAME}"
+else:
+    DATABASE_URI = f"mongodb://{quote_plus(DB_USERNAME)}:{quote_plus(DB_PASSWORD)}@{DB_HOST}/{DB_NAME}"
 
 client = AsyncIOMotorClient(DATABASE_URI)
 database = client.get_database()

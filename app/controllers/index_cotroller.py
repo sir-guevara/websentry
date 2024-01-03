@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends
 from starlette.requests import Request
 
 from app.config import templates
-from app.database.connection import database
 
 router = APIRouter()
 
