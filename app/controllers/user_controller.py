@@ -1,11 +1,12 @@
 # from bson import ObjectId
-# from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+
 # from passlib.context import CryptContext
 
 # from app.database.connection import database
 # from app.models.user_model import UserCreate, UserInDB
 
-# router = APIRouter()
+router = APIRouter()
 
 # # Password hashing context
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
