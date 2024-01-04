@@ -1,79 +1,177 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <header class="container mx-auto my-0 text-stone-800">
-    <div class="container mx-auto p-4">
-        <div class="hero-content">
-            <div class="hero-text flex justify-center align-center flex-col">
-                <h1 class="text-4xl subtitle font-bold mb-4"> <span class="text-orange-500">WebSentry</span></h1>
-                <h6 class="text-1xl subtitle font-bold mb-4">Website Monitoring Service</h6>
-                <p class="text-lg mb-4">
-                    Get website downtime alerts by phone call, SMS, email, or Slack if your
-                    website is down. Create beautiful status pages & incident management reports and keep your
-                    visitors updated.</p>
-                <div class="flex gap-4 align-center justify-center md:justify-start ">
-                    <button class="bg-orange-500 text-white px-6 py-3 rounded-md hover:bg-orange-600"
-                        onclick="openModal('loginModal')"><i class="fas fa-sign-in-alt"></i> Login</button>
-                    <button class="border border-orange-500 text-orange-500 px-6 py-3 rounded-md hover:bg-orange-100"
-                        onclick="openModal('registerModal')"><i class="fas fa-user-plus"></i> Register</button>
-                </div>
-            </div>
-            <img src="https://via.placeholder.com/600x400" alt="Hero Image" class="hero-image rounded-lg mt-4 md:mt-4">
+  <div class="container mx-auto p-4">
+    <div class="hero-content">
+      <div class="hero-text flex justify-center align-center flex-col">
+        <h1 class="text-4xl subtitle font-bold mb-4">
+          <span class="text-orange-500">WebSentry</span>
+        </h1>
+        <h6 class="text-1xl subtitle font-bold mb-4">
+          Website Monitoring Service
+        </h6>
+        <p class="text-lg mb-4">
+          Get website downtime alerts by phone call, SMS, email, or Slack if
+          your website is down. Create beautiful status pages & incident
+          management reports and keep your visitors updated.
+        </p>
+        <div class="flex gap-4 align-center justify-center md:justify-start">
+          <button
+            class="bg-orange-500 text-white px-6 py-3 rounded-md hover:bg-orange-600"
+            onclick="openModal('loginModal')"
+          >
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+          <button
+            class="border border-orange-500 text-orange-500 px-6 py-3 rounded-md hover:bg-orange-100"
+            onclick="openModal('registerModal')"
+          >
+            <i class="fas fa-user-plus"></i> Register
+          </button>
         </div>
+      </div>
+      <img
+        src="https://via.placeholder.com/600x400"
+        alt="Hero Image"
+        class="hero-image rounded-lg mt-4 md:mt-4"
+      />
     </div>
+  </div>
 </header>
 
 <!-- Login Modal -->
 <div id="loginModal" class="modal-overlay" onclick="closeModal('loginModal')">
-    <div class="modal-content bg-slate-50 p-5 text-stone-800" onclick="event.stopPropagation();">
-        <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-        <h2 class="text-2xl font-semibold mb-4 text-orange-500">Login</h2>
-        <form action="/login" method="post" class="space-y-4">
-            <input type="email" name="email" placeholder="Username" class="w-full px-4 py-2 border rounded">
-            <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 border rounded">
-            <button type="submit" class="w-full bg-orange-500 text-white px-4 py-2 rounded"><i
-                    class="fas fa-sign-in-alt"></i> Log In</button>
-        </form>
-    </div>
+  <div
+    class="modal-content bg-slate-50 p-5 text-stone-800"
+    onclick="event.stopPropagation();"
+  >
+    <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+    <h2 class="text-2xl font-semibold mb-4 text-orange-500">Login</h2>
+    <form action="/login" method="post" class="space-y-4">
+      <input
+        type="email"
+        name="email"
+        placeholder="Username"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <button
+        type="submit"
+        class="w-full bg-orange-500 text-white px-4 py-2 rounded"
+      >
+        <i class="fas fa-sign-in-alt"></i> Log In
+      </button>
+    </form>
+  </div>
 </div>
 
 <!-- Register Modal -->
-<div id="registerModal" class="modal-overlay" onclick="closeModal('registerModal')">
-    <div class="modal-content p-5 bg-slate-50 text-stone-800" onclick="event.stopPropagation();">
-        <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
-        <h2 class="text-2xl font-semibold mb-4 text-orange-500">Get Started for free</h2>
-        <form hx-ext="json-enc" class="space-y-4" hx-post="/register" hx-trigger="submit" hx-indicator="#indicator" >
-            <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 border rounded">
-            <input type="text" name="name" placeholder="Name" class="w-full px-4 py-2 border rounded">
-            <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 border rounded">
-            <button type="submit" class="flex gap-4 align-center justify-center w-full bg-orange-500 text-white px-4 py-2 rounded-md border"><i
-                    class="fas fa-user-plus"></i> Sign Up 
-                    <div  id="indicator" class=" htmx-indicator animate-spin rounded-full h-5 w-5 border-t-4 border-b-2 border-slate-50"></div>
-                </button>
-        </form>
-    </div>
+<div
+  id="registerModal"
+  class="modal-overlay"
+  onclick="closeModal('registerModal')"
+>
+  <div
+    class="modal-content p-5 bg-slate-50 text-stone-800"
+    onclick="event.stopPropagation();"
+  >
+    <span class="close-modal" onclick="closeModal('registerModal')"
+      >&times;</span
+    >
+    <h2 class="text-2xl font-semibold mb-4 text-orange-500">
+      Get Started for free
+    </h2>
+    <div id="ok"></div>
+    <form
+      hx-ext="json-enc"
+      class="space-y-4"
+      hx-post="/users/register"
+      hx-trigger="submit"
+      hx-indicator="#indicator"
+    >
+      <!-- Name Field -->
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-600"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="mt-1 p-2 w-full border rounded-md"
+        />
+      </div>
+
+      <!-- Email Field -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-bold text-gray-600"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="mt-1 p-2 w-full border rounded-md"
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-600"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          minlength="6"
+          class="mt-1 p-2 w-full border rounded-md"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full bg-orange-500 text-white p-2 rounded-md mt-3"
+      >
+        Register
+      </button>
+    </form>
+  </div>
 </div>
 
 <div class="container mx-auto my-8 p-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Feature Card 1 -->
-        <div class="feature-card p-6 rounded-md">
-            <h2 class="text-2xl font-semibold mb-4">Website Monitoring</h2>
-            <p>Receive alerts and notifications when your website experiences downtime.</p>
-        </div>
-
-        <!-- Feature Card 2 -->
-        <div class="feature-card p-6 rounded-md">
-            <h2 class="text-2xl font-semibold mb-4">Incident Management</h2>
-            <p>Create incident reports, manage and track the status of incidents efficiently.</p>
-        </div>
-
-        <!-- Feature Card 3 -->
-        <div class="feature-card p-6 rounded-md">
-            <h2 class="text-2xl font-semibold mb-4">Status Pages</h2>
-            <p>Build beautiful status pages to keep your users informed about your website's status.</p>
-        </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Feature Card 1 -->
+    <div class="feature-card p-6 rounded-md">
+      <h2 class="text-2xl font-semibold mb-4">Website Monitoring</h2>
+      <p>
+        Receive alerts and notifications when your website experiences downtime.
+      </p>
     </div>
+
+    <!-- Feature Card 2 -->
+    <div class="feature-card p-6 rounded-md">
+      <h2 class="text-2xl font-semibold mb-4">Incident Management</h2>
+      <p>
+        Create incident reports, manage and track the status of incidents
+        efficiently.
+      </p>
+    </div>
+
+    <!-- Feature Card 3 -->
+    <div class="feature-card p-6 rounded-md">
+      <h2 class="text-2xl font-semibold mb-4">Status Pages</h2>
+      <p>
+        Build beautiful status pages to keep your users informed about your
+        website's status.
+      </p>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

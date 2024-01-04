@@ -1,40 +1,37 @@
-from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
-from passlib.context import CryptContext
+from sqlalchemy.orm import Session
+from starlette.requests import Request
 
-from app.database.connection import database as db
-from app.models.user_model import User, UserCreate
+from app.config import get_db, templates
+from app.sql import crud, schemas
 
 router = APIRouter()
 
-# Password hashing context
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+@router.post("/register", response_model=schemas.User)
+def create_user(request:Request, user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_email(db, email=user.email)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    crud.create_user(db=db, user=user)
+    data = {'msg': 'Logged in successfully'}
+    response = templates.TemplateResponse('dashboard.html', {'request': request, 'data': data})
+    response.headers['HX-Redirect'] = '/dashboard'
+    return response
 
-@router.post("/register")
-async def register_user(user: UserCreate):
-    # Check if the username or email already exists
-    existing_user = await db.users.find_one({"email": user.email})
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Username or email already registered")
+@router.post("/check-email")
+def check_email(email:str,db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_email(db, email=email)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
 
-    # Hash the password before saving to the database
-    hashed_password = pwd_context.hash(user.password)
-    user_dict = dict(user)
-    user_dict.update({"hashed_password": hashed_password})
+@router.get("/users/", response_model=list[schemas.User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = crud.get_users(db, skip=skip, limit=limit)
+    return users
 
-    # Insert the user into the database
-    result = await db.users.insert_one(user_dict)
-    # user.id = str(result.inserted_id)
-
-    return  result
-
-# @router.post("/login", response_model=User)
-# async def login_user(username: str, password: str, db=Depends(database)):
-#     # Retrieve the user from the database
-#     user = await db.users.find_one({"username": username})
-#     if not user or not pwd_context.verify(password, user["hashed_password"]):
-#         raise HTTPException(status_code=401, detail="Invalid credentials")
-
-#     # Convert BSON ObjectId to str for JSON response
-#     user["id"] = str(user["_id"])
-#     return user
+@router.get("/users/{user_id}", response_model=schemas.User)
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
