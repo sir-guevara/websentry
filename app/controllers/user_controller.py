@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from starlette.requests import Request
 
@@ -7,16 +9,17 @@ from app.sql import crud, schemas
 
 router = APIRouter()
 
-@router.post("/register", response_model=schemas.User)
+@router.post("/auth", response_model=schemas.User)
 def create_user(request:Request, user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    crud.create_user(db=db, user=user)
-    data = {'msg': 'Logged in successfully'}
-    response = templates.TemplateResponse('dashboard.html', {'request': request, 'data': data})
-    response.headers['HX-Redirect'] = '/dashboard'
-    return response
+        isPassword = crud.verify_password(user.password,db_user.hashed_password)
+        if not isPassword:
+           raise HTTPException(status_code=400, detail="Incorrect password for the email")
+        return JSONResponse(status_code=200, content=jsonable_encoder(db_user))
+
+    new_user = crud.create_user(db=db, user=user)
+    return JSONResponse(status_code=201, content=jsonable_encoder(new_user))
 
 @router.post("/check-email")
 def check_email(email:str,db: Session = Depends(get_db)):

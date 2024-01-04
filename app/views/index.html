@@ -14,19 +14,120 @@
           your website is down. Create beautiful status pages & incident
           management reports and keep your visitors updated.
         </p>
-        <div class="flex gap-4 align-center justify-center md:justify-start">
+        <div
+          class="flex gap-4 justify-center md:justify-start"
+          x-data="registerData"
+        >
           <button
-            class="bg-orange-500 text-white px-6 py-3 rounded-md hover:bg-orange-600"
-            onclick="openModal('loginModal')"
+            @click="openModal = true"
+            class="bg-orange-500 text-white w-1/2 px-6 py-3 rounded-md hover:bg-orange-600"
           >
-            <i class="fas fa-sign-in-alt"></i> Login
+            <i class="fas fa-sign-in-alt"></i> Get Started
           </button>
-          <button
-            class="border border-orange-500 text-orange-500 px-6 py-3 rounded-md hover:bg-orange-100"
-            onclick="openModal('registerModal')"
+
+          <!-- modal -->
+          <div
+            x-show="openModal"
+            class="fixed inset-0 overflow-y-auto flex items-center justify-center z-15"
           >
-            <i class="fas fa-user-plus"></i> Register
-          </button>
+            <div
+              class="absolute inset-0 bg-gray-500 opacity-75"
+              @click="openModal = false"
+            ></div>
+
+            <div class="bg-white p-6 rounded-md shadow-md w-96 z-20">
+              <button
+                @click="openModal = false"
+                class="absolute top-0 right-0 m-4 text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+
+              <h3 class="text-xl font-semibold text-orange-500 mb-4">
+                Get Started
+              </h3>
+
+              <!-- Form Fields -->
+              <form x-on:submit.prevent="handleSubmit">
+                <div class="mb-4">
+                  <label
+                    for="email"
+                    class="block text-sm font-medium text-gray-600"
+                    >Email</label
+                  >
+                  <input
+                    x-model="email"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    for="password"
+                    class="block text-sm font-medium text-gray-600"
+                    >Password</label
+                  >
+                  <input
+                    x-model="password"
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div class="flex align-center justify-end">
+                  <!-- Submit Button -->
+                  <button
+                    type="submit"
+                    class="l bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 focus:outline-none"
+                    x-bind:class="{ 'cursor-not-allowed': loading }"
+                    :disabled="loading"
+                  >
+                    <span x-show="loading">
+                      <i data-feather="log-out" class="mr-2"></i> accessing
+                      account...</span
+                    >
+                    <span
+                      x-show="!loading"
+                      class="flex justify-content align-center gap-3 w-ful"
+                      >Continue <i data-feather="arrow-right" class="ml-2"></i
+                    ></span>
+                  </button>
+                </div>
+              </form>
+
+              <!-- Success Message -->
+              <div x-show="success" class="mt-4 text-green-500">
+                Account authenticated successfully!
+              </div>
+
+              <!-- Error Message -->
+              <div
+                x-show="error"
+                class="mt-4 text-red-500"
+                x-text="error"
+              ></div>
+            </div>
+          </div>
+          <!-- emd Moday -->
         </div>
       </div>
       <img
@@ -37,112 +138,6 @@
     </div>
   </div>
 </header>
-
-<!-- Login Modal -->
-<div id="loginModal" class="modal-overlay" onclick="closeModal('loginModal')">
-  <div
-    class="modal-content bg-slate-50 p-5 text-stone-800"
-    onclick="event.stopPropagation();"
-  >
-    <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-    <h2 class="text-2xl font-semibold mb-4 text-orange-500">Login</h2>
-    <form action="/login" method="post" class="space-y-4">
-      <input
-        type="email"
-        name="email"
-        placeholder="Username"
-        class="w-full px-4 py-2 border rounded"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        class="w-full px-4 py-2 border rounded"
-      />
-      <button
-        type="submit"
-        class="w-full bg-orange-500 text-white px-4 py-2 rounded"
-      >
-        <i class="fas fa-sign-in-alt"></i> Log In
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- Register Modal -->
-<div
-  id="registerModal"
-  class="modal-overlay"
-  onclick="closeModal('registerModal')"
->
-  <div
-    class="modal-content p-5 bg-slate-50 text-stone-800"
-    onclick="event.stopPropagation();"
-  >
-    <span class="close-modal" onclick="closeModal('registerModal')"
-      >&times;</span
-    >
-    <h2 class="text-2xl font-semibold mb-4 text-orange-500">
-      Get Started for free
-    </h2>
-    <div id="ok"></div>
-    <form
-      hx-ext="json-enc"
-      class="space-y-4"
-      hx-post="/users/register"
-      hx-trigger="submit"
-      hx-indicator="#indicator"
-    >
-      <!-- Name Field -->
-      <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-600"
-          >Name</label
-        >
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="mt-1 p-2 w-full border rounded-md"
-        />
-      </div>
-
-      <!-- Email Field -->
-      <div class="mb-4">
-        <label for="email" class="block text-sm font-bold text-gray-600"
-          >Email</label
-        >
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="mt-1 p-2 w-full border rounded-md"
-        />
-      </div>
-
-      <!-- Password Field -->
-      <div class="mb-4">
-        <label for="password" class="block text-sm font-medium text-gray-600"
-          >Password</label
-        >
-        <input
-          type="password"
-          id="password"
-          name="password"
-          minlength="6"
-          class="mt-1 p-2 w-full border rounded-md"
-        />
-      </div>
-
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="w-full bg-orange-500 text-white p-2 rounded-md mt-3"
-      >
-        Register
-      </button>
-    </form>
-  </div>
-</div>
 
 <div class="container mx-auto my-8 p-4">
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -174,4 +169,37 @@
   </div>
 </div>
 
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("registerData", () => ({
+      email: "",
+      password: "",
+      loading: false,
+      success: false,
+      error: "",
+      openModal: false,
+
+      async handleSubmit() {
+        this.loading = true;
+        const apiUrl = "/users/auth";
+        const requestData = {
+          email: this.email,
+          password: this.password,
+        };
+        // Sending a POST request
+        sendRequest(apiUrl, { method: "POST", data: requestData })
+          .then((response) => {
+            if (response) {
+              window.location.replace("/dashboard");
+            }
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.loading = false;
+            console.error("Request failed:", error);
+          });
+      },
+    }));
+  });
+</script>
 {% endblock %}
