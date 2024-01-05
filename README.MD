@@ -4,8 +4,8 @@ A complete website and server monitoring solution, including domain and SSL cert
 
 ### Built with
 
-- Python
-- FastApi
+- Bun
+- TypeScript
 - HTMX
-- Jinja2
+- Hono
 - TailwindCSS
