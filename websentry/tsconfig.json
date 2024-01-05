@@ -5,5 +5,9 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "types": ["bun-types"]
+    ,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
   }
 }

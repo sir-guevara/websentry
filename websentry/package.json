@@ -1,11 +1,18 @@
-{
+{"type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/app.ts",
+    "vite-dev": "vite",
+    "build": "vite build",
+    "serve": "NODE_ENV=production bun run src/app.ts"
   },
   "dependencies": {
     "hono": "^3.12.0"
   },
   "devDependencies": {
-    "bun-types": "^1.0.7"
+    "autoprefixer": "^10.4.16",
+    "bun-types": "^1.0.7",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.10"
   }
 }
