@@ -1,34 +1,42 @@
-import type { FC } from "hono/jsx";
 import Layout from "../components/IndexLayout";
-const IndexPage: FC = () => {
+import Modal from "../components/modal";
+
+const IndexPage = () => {
+  let isOpen = false;
+
+  const toggleModal = () => {
+    isOpen = !isOpen;
+  };
   return (
-    <Layout>
-      <div className="container p-4">
-        <nav class="bg-stone-900  text-white left-2 right-2 md:left-10 md:right-10 fixed  mt-5 rounded-full flex justify-center align-center mx-4  p-3">
-          <a
-            href="#"
-            class="pt-3 md:pt-1 px-3 text-sm md:text-lg text-ornage-500"
-          >
-            Web<span class="font-bold text-white">Sentry</span>
+    <Layout title="WebSentry - Free Site Monitoring">
+      <div class="container mx-auto relative">
+        <nav class="fixed left-4 right-4 md:mx-auto md:right-0 md:left-0 md:w-4/5 lg:w-1/2 p-2 rounded-full mt-2 md:mt-5 flex items-center font-semibold text-sm text-slate-900 dark:text-slate-200 bg-slate-50/90 dark:bg-slate-700/90 backdrop-blur-sm ring-1 ring-slate-900/10 dark:ring-black/10">
+          <a href="#" class=" md:pt-1 px-3 text-md md:text-lg text-ornage-500">
+            Web<span class="font-bold  text-orange-500 ">Sentry</span>
             <span class="text-orange-500 font-bold">.</span>
           </a>
           <ul class="flex space-x-4 ml-auto">
             <li>
-              <a
-                href="#"
-                class="text-xs md:text-sm font-bold px-6 py-2 rounded-full bg-orange-600 transition duration-300 ease-in-out hover:text-orange-500 border-orange-500 hover:bg-white flex items-center justify-center gap-3"
+              <button
+                onClick={toggleModal}
+                id="openModalBtn"
+                class="text-xs md:text-sm text-white font-bold px-6 py-2 rounded-full bg-orange-600 transition duration-300 ease-in-out hover:text-orange-500 border-orange-500 hover:bg-white flex items-center justify-center gap-2"
               >
                 <span>
-                  <i data-feather="lock" class="text-xs"></i>
+                  <i
+                    data-feather="lock"
+                    class="text-xs w-[1rem] md:w-[1.2rem]"
+                  ></i>
                 </span>
                 Access Account
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
       </div>
 
-      <div class="bg-gradient-to-t from-orange-700 via-orange-500 to-orange-400 min-h-screen flex items-center">
+      <Modal isOpen={isOpen} />
+      <div class="p-1 bg-gradient-to-t from-orange-700 via-orange-500 to-orange-400 min-h-screen flex items-center">
         <div class="container mx-auto text-white text-center">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             Welcome to Your Website

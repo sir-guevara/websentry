@@ -1,10 +1,13 @@
-import { Hono } from 'hono'
-import IndexPage from '../views/pages/indexPage'
-const indexRoute = new Hono()
+import { Hono } from "hono";
+import DbPage from "../views/pages/dashboardPages";
+import IndexPage from "../views/pages/indexPage";
+const indexRoute = new Hono();
 
+indexRoute.get("/", (c) => {
+  return c.html(<IndexPage />);
+});
+indexRoute.get("/dashboard", (c) => {
+  return c.html(<DbPage />);
+});
 
-indexRoute.get('/', (c) => {
-  return c.html(<IndexPage />)
-})
-
-export default indexRoute
+export default indexRoute;
