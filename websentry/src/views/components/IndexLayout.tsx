@@ -19,7 +19,7 @@ const Layout = (props: { children?: any; title: string }) => (
       {cssFile ? raw(`<link rel="stylesheet" href="${cssFile}">`) : null}
       <title>{props.title}</title>
     </head>
-    <body class="font-sans">
+    <body class="font-sans" x-data="{openDetails: false }">
       {props.children}
       <footer>
         <div class="container mx-auto text-center">
@@ -28,14 +28,42 @@ const Layout = (props: { children?: any; title: string }) => (
       </footer>
       <script>feather.replace();</script>
       <script src="/static/js/op.js/"></script>
-
+      {raw(` <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("modalData", () => ({
+          email: "",
+          password: "",
+          loading: false,
+          success: false,
+          error: "",
+          openModal: false,
+          toggleModal() {
+            console.log("Openning modal", this.openModal);
+            this.openModal = !this.openModal;
+            console.log("Modal opened", this.openModal);
+          },
+          handleSubmit() {
+            // Simulate form submission with a delay
+            this.loading = true;
+            setTimeout(() => {
+              // Simulate success
+              // In a real scenario, you'd perform an actual AJAX request here
+              this.loading = false;
+              this.success = true;
+              this.email = "";
+              this.password = "";
+              this.error = "";
+            }, 1500);
+          },
+        }));
+      });
+    </script>`)}
       {isProd
         ? null
         : raw(`<script
                 type="module"
                 src="http://localhost:5173/@vite/client"
-            ></script>
-          
+            ></script> 
             <script
                 type="module"
                 src="http://localhost:5173/src/client.tsx"

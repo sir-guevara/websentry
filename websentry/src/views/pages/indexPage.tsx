@@ -1,3 +1,4 @@
+import { raw } from "hono/html";
 import Layout from "../components/IndexLayout";
 import Modal from "../components/modal";
 
@@ -9,16 +10,15 @@ const IndexPage = () => {
   };
   return (
     <Layout title="WebSentry - Free Site Monitoring">
-      <div class="container mx-auto relative">
+      <div class="container mx-auto relative" x-data="modalData">
         <nav class="fixed left-4 right-4 md:mx-auto md:right-0 md:left-0 md:w-4/5 lg:w-1/2 p-2 rounded-full mt-2 md:mt-5 flex items-center font-semibold text-sm text-slate-900 dark:text-slate-200 bg-slate-50/90 dark:bg-slate-700/90 backdrop-blur-sm ring-1 ring-slate-900/10 dark:ring-black/10">
           <a href="#" class=" md:pt-1 px-3 text-md md:text-lg text-ornage-500">
             Web<span class="font-bold  text-orange-500 ">Sentry</span>
             <span class="text-orange-500 font-bold">.</span>
           </a>
-          <ul class="flex space-x-4 ml-auto">
+          {raw(`   <ul class="flex space-x-4 ml-auto">
             <li>
-              <button
-                onClick={toggleModal}
+              <button @click="toggleModal"
                 id="openModalBtn"
                 class="text-xs md:text-sm text-white font-bold px-6 py-2 rounded-full bg-orange-600 transition duration-300 ease-in-out hover:text-orange-500 border-orange-500 hover:bg-white flex items-center justify-center gap-2"
               >
@@ -31,11 +31,52 @@ const IndexPage = () => {
                 Access Account
               </button>
             </li>
-          </ul>
+          </ul>`)}
         </nav>
+        <Modal title={"Login/Register"}>
+          {raw(` <form x-on:submit.prevent="handleSubmit">
+                <div class="mb-4">
+                  <label
+                    for="email"
+                    class="block text-sm font-medium text-gray-600"
+                    >Email</label
+                  >
+                  <input
+                    x-model="email"
+                    type="email"
+                    id="url"
+                    name="email"
+                    required
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    for="password"
+                    class="block text-sm font-medium text-gray-600"
+                    >Password</label>
+                  <input
+                    x-model="password"
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
+                </div>
+                <button
+                  type="submit"
+                  class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none"
+                  x-bind:class="{ 'cursor-not-allowed': loading }" :disabled="loading"
+                >
+                  <span x-show="loading">Loading...</span>
+                  <span x-show="!loading">Add Site</span>
+                </button>
+
+        </form>`)}
+        </Modal>
       </div>
 
-      <Modal isOpen={isOpen} />
       <div class="p-1 bg-gradient-to-t from-orange-700 via-orange-500 to-orange-400 min-h-screen flex items-center">
         <div class="container mx-auto text-white text-center">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">

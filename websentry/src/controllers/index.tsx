@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import DbPage from "../views/pages/dashboardPages";
+import DbPage from "../views/pages/dashboardPage";
 import IndexPage from "../views/pages/indexPage";
 const indexRoute = new Hono();
 
