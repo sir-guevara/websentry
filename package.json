@@ -1,0 +1,19 @@
+{
+  "name": "websentry",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "workspaces": ["backend", "frontend"],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "dev": "turbo run dev"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "react-router-dom": "^6.21.2"
+  }
+}
