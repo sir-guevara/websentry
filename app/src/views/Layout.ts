@@ -28,6 +28,11 @@ interface SiteData {
         font-size: 18px;
         font-weight:400;
       }
+
+.t-wrap {
+  top:10px!important;
+  bottom:90vh!important; 
+}
       a,.font-an{
         font-family: 'Anonymous Pro', monospace;
       }
@@ -37,16 +42,15 @@ interface SiteData {
         line-height: 28px;
       }
     </style>
-    <link href="/public/dist/toasty.min.css" rel="stylesheet">
-    <script src="/public/dist/toasty.min.js"></script>
+    <script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
   </head>
   <body>
     <div class="bg-slate-100 min-h-full">
     ${props.content}
     </div>
     <script>
-      const toast = new Toasty();
-      toast.info("Here is some information!");
+        toast.error('🤦‍♂️ error message :(', 5000);
+        toast.success('👍 success message', 5000);
     </script>
   </body>
   </html>

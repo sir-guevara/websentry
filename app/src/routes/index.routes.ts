@@ -4,7 +4,7 @@ import IndexPage from "../views/pages";
 import LoginPage from "../views/pages/login";
 import { loginService, signupService } from "../services/user.service";
 import { CreateUserDto } from "../models/user.dto";
-import SignupPage from "../views/pages/singup";
+import SignupPage from "../views/pages/signup";
 const indexRoute = new Hono();
 
 indexRoute.get("/", (c) => {
@@ -18,6 +18,7 @@ indexRoute
   .post(async (c) => {
     try {
       const body = (await c.req.parseBody()) as CreateUserDto;
+      console.log(body);
       const user = await loginService({ ...body });
       return c.json(user);
     } catch (error) {
@@ -32,9 +33,12 @@ indexRoute
   .post(async (c) => {
     try {
       const body = (await c.req.parseBody()) as CreateUserDto;
+      console.table(body);
       const user = await signupService({ ...body });
       return c.json(user);
     } catch (error) {
+      console.log(error);
+      c.status(400)
       return c.json({ error });
     }
   });

@@ -6,8 +6,9 @@ export const signupService = async (data: CreateUserDto) => {
     if(isUser){
         throw new Error("User already exists");
     }
+    const hash = await Bun.password.hash(data.password);
     return  await prisma.user.create({
-        data: { ...data },
+        data: { email: data.email, password: hash},
   });
 };
 
@@ -17,5 +18,11 @@ export const loginService = async (data:CreateUserDto) => {
     if(!user){
         throw new Error("User not found");
     }
+    const isMatch = await Bun.password.verify(data.password, user.password);
+    if(!isMatch){
+        throw new Error("Invalid password");
+    }
     return user
 }
+
+

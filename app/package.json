@@ -1,15 +1,17 @@
 {
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  },
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "@prisma/cli": "^2.20.1",
     "@prisma/client": "^5.8.1",
-    "@prisma/migrate": "^5.8.1",
     "hono": "^3.12.6",
+    "mongoose": "^8.1.1",
     "prisma": "^5.8.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.0.0"
+    "@types/bun": "^1.0.4"
   }
 }

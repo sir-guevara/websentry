@@ -13,7 +13,7 @@ const LoginPage =() =>html`
             <label class="block text-gray-700 text-xs font-bold mb-2" for="email">
                 EMAIL
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="username" type="email" placeholder="Enter your email address">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Enter your email address">
         </div>
         <div class="mb-6">
             <label class="block text-gray-700 text-xs font-bold mb-2" for="password">
@@ -22,7 +22,7 @@ const LoginPage =() =>html`
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password" placeholder="Enter your password">
         </div>
         <div class="flex gap-6 justify-between">
-        <button type="submit" class="py-2 px-6 border rounded bg-purple-800 hover:bg-purple-500 text-white font-an w-full"> Login</button>
+        <button type="submit" class="py-2 px-6 border rounded bg-purple-800 hover:bg-purple-500 text-white font-an w-full"> Log in</button>
         </div>
     </form>
 </section>
