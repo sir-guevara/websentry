@@ -3,7 +3,8 @@
     "seed": "bun run prisma/seed.ts"
   },
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun ./src/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",
