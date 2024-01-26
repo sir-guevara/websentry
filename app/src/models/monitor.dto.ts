@@ -1,5 +1,6 @@
 export type CreateMonitorDto = {
     url:string;
+    userId:string;
 }
 enum SSLStatus{
     HEALTHY = "HEALTHY",

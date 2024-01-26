@@ -18,9 +18,8 @@ indexRoute
   .post(async (c) => {
     try {
       const body = (await c.req.parseBody()) as CreateUserDto;
-      console.log(body);
       const user = await loginService({ ...body });
-      return c.json(user);
+      return c.redirect('/dashboard')
     } catch (error) {
       return c.json({ error });
     }
@@ -33,7 +32,6 @@ indexRoute
   .post(async (c) => {
     try {
       const body = (await c.req.parseBody()) as CreateUserDto;
-      console.table(body);
       const user = await signupService({ ...body });
       return c.json(user);
     } catch (error) {
@@ -42,5 +40,7 @@ indexRoute
       return c.json({ error });
     }
   });
+
+  
 
 export default indexRoute;
