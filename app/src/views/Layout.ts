@@ -22,26 +22,7 @@ interface SiteData {
     <meta name="description" content="${props.description}">
     <meta property="og:title" content="${props.title}">
     <meta property="og:image" content="${props.image}">
-    <style>
-      body {
-        font-family: 'Nunito Sans', sans-serif;
-        font-size: 18px;
-        font-weight:400;
-      }
-
-.t-wrap {
-  top:10px!important;
-  bottom:90vh!important; 
-}
-      a,.font-an{
-        font-family: 'Anonymous Pro', monospace;
-      }
-
-      h4,p{
-        font-style: normal;
-        line-height: 28px;
-      }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
     <script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
   </head>
   <body>
