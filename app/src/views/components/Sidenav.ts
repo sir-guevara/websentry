@@ -26,7 +26,7 @@ const SideNav = () => html`
             </ul>
           
         <div class="h-full flex flex-col justify-end">
-            <button class="px-5 py-2 rounded-md  bg-blue-950 hover:bg-indigo-600 border-none mb-3">Logout ->]</button>
+            <a href="/logout" class="px-5 py-2 rounded-md  bg-blue-950 hover:bg-indigo-600 border-none mb-3">Logout ->]</a>
         </div>
                 
         ${html`<script>

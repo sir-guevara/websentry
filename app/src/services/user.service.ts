@@ -22,7 +22,8 @@ export const loginService = async (data:CreateUserDto) => {
     if(!isMatch){
         throw new Error("Invalid password");
     }
-    return user
+    const  {password, ...profile } = user;
+    return profile
 }
 
 
