@@ -24,11 +24,12 @@ interface SiteData {
     <meta property="og:title" content="${props.title}">
     <meta property="og:image" content="${props.image}">
     <link rel="stylesheet" href="/static/style.css">
-    <script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
   </head>
   <body class="text-slate-600">
     <div class="bg-slate-100 flex h-full">
-    <div class="w-1/5 hidden md:block">
+    <div class="w-1/3 lg:w-1/5 hidden md:block">
     ${SideNav()}
     </div>
         <div class="md:w-5/6 w-full">
@@ -39,6 +40,16 @@ interface SiteData {
         toast.error('🤦‍♂️ error message :(', 5000);
         toast.success('👍 success message', 5000);
     </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script>
+    var toast = new Notyf({
+          duration: 2000,
+          position: {
+            x: 'right',
+            y: 'top',
+          }
+        });
+    </script>
   </body>
   </html>
   `

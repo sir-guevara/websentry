@@ -30,8 +30,8 @@ interface SiteData {
     ${props.content}
     </div>
     <script>
-        toast.error('🤦‍♂️ error message :(', 5000);
-        toast.success('👍 success message', 5000);
+        //toast.error('🤦‍♂️ error message :(', 5000);
+       //toast.success('👍 success message', 5000);
     </script>
   </body>
   </html>

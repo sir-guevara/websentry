@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",
+    "dns": "^0.2.2",
     "hono": "^3.12.6",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "mongoose": "^8.1.1",
     "prisma": "^5.8.1"
   },

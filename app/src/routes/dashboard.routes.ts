@@ -5,14 +5,19 @@ import AddMonitorPage from "../views/pages/add";
 import StatusPage from "../views/pages/status";
 import SubscriptionPage from "../views/pages/subscription";
 import TeamPage from "../views/pages/team";
-import { addMonitorService } from "../services/moitor.service";
+import { addMonitorService, getMnitorService } from "../services/moitor.service";
 import { CreateMonitorDto } from "../models/monitor.dto";
+import dashboardNewPage from "../views/pages/dashboardNew";
 
 const dashboardRoute = new Hono();
 dashboardRoute.get("/", async (c) => {
-  // console.log(c.get("user").id);
-
-  return c.html(DashboardLayout({title:"Websentry - Dashboard",content:dashboardPage()}))
+  //@ts-ignore
+  const userId = c.get("user").id;
+  const userMonitors = await getMnitorService(userId);
+  if(userMonitors.length < 1) {
+    return c.html(DashboardLayout({title:"Websentry - Dashboard",content:dashboardNewPage()}))
+  }
+  return c.html(DashboardLayout({title:"Websentry - Dashboard",content:dashboardPage(userMonitors)}))
 });
 
 dashboardRoute.get("/add-monitor", (c) => {
@@ -20,13 +25,16 @@ dashboardRoute.get("/add-monitor", (c) => {
 })
 .post(async(c)=>{
     try {
-      const body = await c.req.parseBody() as any;
-      console.log(body.url);
-      // const monitor = await addMonitorService(body); 
-
-      return c.json(body)
+      const body = await c.req.json() as any;
+      //@ts-ignore
+      const user = c.get('user'); 
+      const data  ={ url:body.url.split('/')[2], userId:user.id};
+      
+      const monitor = await addMonitorService(data); 
+      return c.json(monitor)
       
     } catch (error:any) {
+      // console.log(error) 
       c.status(400);
       return c.json(error.message);
     }
