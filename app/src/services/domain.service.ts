@@ -15,6 +15,9 @@ function isDomainOnline(domain:string) {
   });
 }
 
+function getDNSDetails(domain:string){
+
+}
 
 function getSSLDetails(domain:string) {
     return new Promise((resolve) => {
@@ -86,4 +89,13 @@ async function getDomainDetails(domain: string) {
   }
 }
 
-getDomainDetails('badssl.com');
+// getDomainDetails('badssl.com');
+
+import whoiser from 'whoiser';
+
+async function  dd(){
+   const ingo = await whoiser('pawwiki.com')
+   console.log(ingo)
+}
+
+dd()
