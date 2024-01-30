@@ -1,1 +1,1 @@
-{ "dependencies": { "domain-info-fetcher": "^1.2.0", "tls": "^0.0.1", "uninstall": "^0.0.0", "whoiser": "^1.17.1" } }
+{ "dependencies": { "domain-info-fetcher": "^1.2.0", "tls": "^0.0.1", "uninstall": "^0.0.0" } }

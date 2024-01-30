@@ -21,7 +21,7 @@ export default function dashboardNewPage() {
             class="flex-grow px-3 py-2 focus:outline-none rounded-md" required
           />
         </div>
-        <button 
+        <button  type="submit"
           class="mx-auto my-6 px-3  text-center py-2 bg-indigo-600 rounded-md font-semi text-white text-lg w-1/6"
         >
           Go!

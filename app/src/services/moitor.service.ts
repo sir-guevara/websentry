@@ -16,7 +16,10 @@ export const getMnitorService = async (userId:string) => {
     return await prisma.monitor.findMany({
         where:{
             userId:userId
-        }
+        },
+        orderBy: {
+            createdAt: 'desc',
+          },
     })
 }
 

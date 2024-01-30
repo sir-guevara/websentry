@@ -25,6 +25,7 @@ interface SiteData {
     <meta property="og:image" content="${props.image}">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 
   </head>
   <body class="text-slate-600">
@@ -42,6 +43,7 @@ interface SiteData {
     </script> -->
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
+    feather.replace();
     var toast = new Notyf({
           duration: 2000,
           position: {

@@ -23,7 +23,7 @@ authRoute
         path: '/',
         secure: true,
         httpOnly: true,
-        maxAge:  60 * 60 * 2 * 7,
+        maxAge:  60 * 60 * 24 * 7,
         sameSite: 'Strict',
       })
       return c.redirect('/dashboard')

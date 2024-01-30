@@ -14,7 +14,7 @@ const SideNav = () => html`
         <div class="my-3">
             <h3 class="sidebar-title font-black font-an text-2xl block">WebSentry.</h3>
         </div>
-            <button class="px-5 py-1 rounded border border-slate-800 mb-3 block hover:bg-indigo-600">[+] New monitor</button>
+            <button class="px-5  rounded mb-3 block hover:bg-slate-800 py-2 bg-indigo-600 text-white hover:text-white font-bold">✨ Upgrade</button>
             <ul class="w-full flex flex-col">
                 ${links.map(link => html`
                     <li class="w-full">
@@ -32,12 +32,12 @@ const SideNav = () => html`
         ${html`<script>
             const links = document.querySelectorAll('.nav-link');
             for(let i=0; i < links.length; i++ ){
-                    links[i].classList.remove('bg-indigo-600');
+                    links[i].classList.remove('bg-indigo-400');
                 if(links[i].getAttribute('href') == location.pathname){
-                    links[i].classList.add('bg-indigo-600');
+                    links[i].classList.add('bg-indigo-400');
                 }
             }
-
+          
         </script>`}
     </div>
 `;
