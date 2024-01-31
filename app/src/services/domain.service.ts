@@ -4,7 +4,7 @@ import https from 'https';
 import tls from 'tls';
 
 
-const domain = 'Akivas.com';
+const domain = 'pawwiki.com';
 
 // Function to check if the domain is online
 function isDomainOnline(domain:string) {
