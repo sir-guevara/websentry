@@ -6,6 +6,7 @@ import authRoute from './routes/auth.routes';
 import { authMiddleware } from './middlewares/auth.middleware';
 import  path  from 'node:path';
 import { serveStatic } from 'hono/bun';
+import job from './utils/cronjob';
 const app = new Hono()
 
 
@@ -19,6 +20,7 @@ app.use('/static/*', serveStatic({ root:'./',onNotFound: (path, c) => {
 },}))
 app.use('/favicon.ico', statics)
 
+job.start()
 
 const port = Bun.env.PORT || 8000;
 export const server = Bun.serve({

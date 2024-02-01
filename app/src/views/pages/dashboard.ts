@@ -20,7 +20,7 @@ export default function dashboardPage(monitors:any) {
  
   return html`
     <div
-      class="container mx-auto h-full flex flex-col "
+      class="container mx-auto h-full flex flex-col overflow-y-scroll overflow-x-hidden"
       id="dashboardApp"
     >
     <div class="header w-full mb-7 border-b-2 flex justify-between p-4 items-center">
@@ -101,7 +101,7 @@ export default function dashboardPage(monitors:any) {
             <i data-feather="globe"></i>
           </div>
           <div class="flex items-center justify-between w-full flex-wrap ">
-            <h1 class="text-lg font-bold text-blue-600 ">${monitor.url}</h1>
+            <h1 class="text-lg font-bold text-blue-600 "><a href='${monitor.ssl.status =="HEALTHY"?"https://":"http://"}${monitor.url}' target="_blank">${monitor.url}</a></h1>
             <div class="flex gap-2 items-center border border-2 border-${statusColor(monitor.status)}-400 rounded-2xl px-1">
               <div class="dot bg-${statusColor(monitor.status)}-500 after:bg-${statusColor(monitor.status)}-500"></div>
               <span class="text-sm font-bold font-an">${monitor.status}</span>
@@ -128,9 +128,9 @@ export default function dashboardPage(monitors:any) {
         </div>
 
         <div class="flex w-full mt-5 items-center justify-between gap-4 ">
-          <div class="rounded-full text-gray-300 border border-2 border-gray-300 px-3 py-1 w-full text-center font-bold hover:bg-indigo-600 hover:text-white cursor-pointer hover:border-indigo-600 flex items-center text-center justify-center">
+          <a href='/dashboard/monitor/${monitor.id}' class="rounded-full text-gray-300 border border-2 border-gray-300 px-3 py-1 w-full text-center font-bold hover:bg-indigo-600 hover:text-white cursor-pointer hover:border-indigo-600 flex items-center text-center justify-center">
             Overview
-          </div>
+          </a>
           <div class="icon cursor-pointer hover:text-indigo-700">
             <i data-feather="refresh-ccw"></i>
           </div>

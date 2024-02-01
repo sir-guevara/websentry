@@ -14,11 +14,28 @@ export const addMonitorService = async (data:CreateMonitorDto) => {
     })
 }
 
+export  async function getMonitorByIdService (id:string){
+    return await prisma.monitor.findFirst({where:{id}})
+}
 export const getMonitorService = async (userId:string) => {
     return await prisma.monitor.findMany({
         where:{
             userId:userId
         },
+        include:{
+            ssl:true
+        },
+        orderBy: {
+            createdAt: 'desc',
+          },
+    })
+}
+
+
+
+export const getAllMonitorService = async () => {
+    return await prisma.monitor.findMany({
+        
         include:{
             ssl:true
         },

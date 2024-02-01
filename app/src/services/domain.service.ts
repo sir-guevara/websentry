@@ -79,7 +79,7 @@ export async function getDomainDetails(domain: string) {
   
     if (sslDetails) {
         if(sslDetails == 'CERT_HAS_EXPIRED'){
-            domainDetails.ssl = {status:'EXIRED'};
+            domainDetails.ssl = {status:'EXPIRED'};
             domainDetails.speed = await getResponseSpeed(domain, "http")
         }else{
           domainDetails.speed = await getResponseSpeed(domain, "https")

@@ -31,6 +31,9 @@ export async function request(path, { data, method = "GET" })  {
 
     let emsg=null;
     if(error?.message){
+      console.log(error);
+      console.log("--------------------------------")
+      console.log(error.message)
       emsg = JSON.parse(error?.message)?.message;
     }
     const errorMessage = emsg || 'An unexpected error occurred.';
