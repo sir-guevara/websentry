@@ -28,11 +28,9 @@ export async function request(path, { data, method = "GET" })  {
     throw new Error(JSON.stringify(json));
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
-    // Handle all other errors
-    console.log(error)
 
     let emsg=null;
-    if(error?.messag){
+    if(error?.message){
       emsg = JSON.parse(error?.message)?.message;
     }
     const errorMessage = emsg || 'An unexpected error occurred.';

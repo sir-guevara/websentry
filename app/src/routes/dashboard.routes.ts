@@ -5,7 +5,7 @@ import AddMonitorPage from "../views/pages/add";
 import StatusPage from "../views/pages/status";
 import SubscriptionPage from "../views/pages/subscription";
 import TeamPage from "../views/pages/team";
-import { addMonitorService, getMnitorService } from "../services/moitor.service";
+import { addMonitorService, getMonitorService } from "../services/monitor.service";
 import { CreateMonitorDto } from "../models/monitor.dto";
 import dashboardNewPage from "../views/pages/dashboardNew";
 
@@ -13,7 +13,7 @@ const dashboardRoute = new Hono();
 dashboardRoute.get("/", async (c) => {
   //@ts-ignore
   const userId = c.get("user").id;
-  const userMonitors = await getMnitorService(userId);
+  const userMonitors = await getMonitorService(userId);
   if(userMonitors.length < 1) {
     return c.html(DashboardLayout({title:"Websentry - Dashboard",content:dashboardNewPage()}))
   }
@@ -36,7 +36,7 @@ dashboardRoute.get("/add-monitor", (c) => {
     } catch (error:any) {
       // console.log(error) 
       c.status(400);
-      return c.json(error.message);
+      return c.json({"message":error.message});
     }
 });
 dashboardRoute.get("/status-page", (c) => {

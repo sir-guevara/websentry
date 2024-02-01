@@ -4,6 +4,8 @@ import prisma from "../utils/prisma";
 
 
 export const addMonitorService = async (data:CreateMonitorDto) => {
+    const monitor = await prisma.monitor.findFirst({where: {userId:data.userId, url:data.url}})
+    if(monitor){throw new Error("Monitor Already Exists")}
     return await prisma.monitor.create({
         data:{
             url:data.url,
@@ -12,7 +14,7 @@ export const addMonitorService = async (data:CreateMonitorDto) => {
     })
 }
 
-export const getMnitorService = async (userId:string) => {
+export const getMonitorService = async (userId:string) => {
     return await prisma.monitor.findMany({
         where:{
             userId:userId
