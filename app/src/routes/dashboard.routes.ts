@@ -6,7 +6,6 @@ import StatusPage from "../views/pages/status";
 import SubscriptionPage from "../views/pages/subscription";
 import TeamPage from "../views/pages/team";
 import { addMonitorService, createSSLService, getMonitorByIdService, getMonitorService, updateMonitorService } from "../services/monitor.service";
-import { CreateMonitorDto } from "../models/monitor.dto";
 import dashboardNewPage from "../views/pages/dashboardNew";
 import { getDomainDetails } from "../services/domain.service";
 import MonitorPage from "../views/pages/monitor";
