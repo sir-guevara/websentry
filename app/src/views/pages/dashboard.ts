@@ -1,4 +1,5 @@
 import { html } from "hono/html";
+import moment from 'moment';
 
 export default function dashboardPage(monitors:any) {
   const cardBorder = (s:string):string =>{
@@ -8,13 +9,13 @@ export default function dashboardPage(monitors:any) {
     return "";
   }
   const statusColor= (s:string):string =>{
-    if(s=="OFFLINE" || s=="NOT_FOUND"){
-      return "red"
+    if(s=="ONLINE" || s=="HEALTHY"){
+      return "green"
     }
     else if(s=="EXPIRED"){
       return "yellow"
     }
-    return "green"
+    return "red"
   }
  
   return html`
@@ -73,7 +74,7 @@ export default function dashboardPage(monitors:any) {
               </div>
            
               <div class="flex flex-col justify-center items-center">
-                <span class="text-2xl font-bold">${monitors.reduce((acc:number,monitor:any)=>(monitor.sslStatus =="HEALTHY"?acc+1:acc),0)}</span>
+                <span class="text-2xl font-bold">${monitors.reduce((acc:number,monitor:any)=>(monitor?.sslStatus =="HEALTHY"?acc+1:acc),0)}</span>
                 <span class="text-sm font-bold text-gray-400">Valid SSL</span>
               </div>
             </div>
@@ -90,21 +91,16 @@ export default function dashboardPage(monitors:any) {
         </div>
 
 
-
-
-
-
-
     <div class="conainer p-4 mx-auto w-full">
     <div class="grid md:grid-cols-3 gap-2 sm:grid-cols-2">
     ${monitors.map( (monitor:any )=> html`
-      <div class='${(monitor.status =="OFFLINE" ? "bg-red-100  ":"bg-white") + " rounded p-6 w-full font-an shadow border " + cardBorder(monitor.status) }'>
-        <p class="text-xs text-slate-400 text-center">last checked 10 minutes ago</p>
+      <div class='${(monitor.status =="OFFLINE" ? "bg-red-100  ":"bg-white") + " rounded p-6 w-full font-an shadow border grid grid-auto-flow" + cardBorder(monitor.status) }'>
+        <p class="text-xs text-slate-400 text-center">last checked ${ moment(monitor.updatedAt).fromNow()}</p>
         <div class="flex items-center jutify-between gap-2 mt-2 text-slate-600">
           <div class="icon">
             <i data-feather="globe"></i>
           </div>
-          <div class="flex items-center justify-between w-full">
+          <div class="flex items-center justify-between w-full flex-wrap ">
             <h1 class="text-lg font-bold text-blue-600 ">${monitor.url}</h1>
             <div class="flex gap-2 items-center border border-2 border-${statusColor(monitor.status)}-400 rounded-2xl px-1">
               <div class="dot bg-${statusColor(monitor.status)}-500 after:bg-${statusColor(monitor.status)}-500"></div>
@@ -115,10 +111,10 @@ export default function dashboardPage(monitors:any) {
 
         <div class="flex items-center jutify-between gap-2 text-sm mt-2 text-slate-600 font-light">
           <div class="icon text-${statusColor(monitor?.ssl?.status)}-500">
-            <i data-feather='${monitor.ssl?.status == "HEALTHY"?"shield":"shield-off"}' width="16"></i>
+            <i data-feather='${monitor?.ssl?.status == "HEALTHY"?"shield":"shield-off"}' width="16"></i>
           </div>
           <div class="flex items-center justify-between w-full">
-            <h1 class="text-md bg-${statusColor(monitor.ssl?.status)}-100  text-${statusColor(monitor.ssl?.status)}-600 border border-1 border-${statusColor(monitor.ssl?.status)}-500 rounded rounded-full px-2">SSL ${monitor.ssl?.status}</h1>
+            <h1 class="text-md bg-${statusColor(monitor?.ssl?.status)}-100  text-${statusColor(monitor?.ssl?.status)}-600 border border-1 border-${statusColor(monitor?.ssl?.status)}-500 rounded rounded-full px-2">SSL ${monitor?.ssl?.status}</h1>
           </div>
         </div>
 

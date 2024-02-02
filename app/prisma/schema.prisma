@@ -30,7 +30,7 @@ model Monitor {
   status    String @default("OFFLINE")
   userId    String
   user      User     @relation(fields: [userId], references: [id])
-  ssl        SSL?
+  ssl SSL?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -46,6 +46,6 @@ model SSL {
   validFrom   String?
   validTo     String?
   status      String   @default("NOT_FOUND")
-  monitor     Monitor  @relation(fields: [monitorId], references: [id])
+  monitor     Monitor  @relation(fields: [monitorId], references: [id],onDelete: Cascade)
   monitorId   String @unique
 }

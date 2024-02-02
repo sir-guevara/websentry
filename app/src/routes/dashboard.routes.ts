@@ -32,13 +32,33 @@ dashboardRoute.get("/add-monitor", (c) => {
       const data  ={ url:body.url.split('/')[2], userId:user.id};
       
       const monitor = await addMonitorService(data); 
-      const domainDetails = await getDomainDetails(monitor.url)
-      await createSSLService(monitor.id,domainDetails.ssl)
-      const newDomainDetails = await updateMonitorService(monitor.id,{speed:domainDetails.speed, status:domainDetails.status})
-      return c.json(newDomainDetails)
+      let domainDetails:any;
+      getDomainDetails(monitor.url).
+      then(async (domainDetail) =>{
+        domainDetails = domainDetail;
+      
+      })
+      .catch(err => {
+        if (err.code === 'ERR_TLS_CERT_ALTNAME_INVALID'){
+          domainDetails = {
+            status:"OFFLINE",
+            speed:"N/A",
+            ssl:{
+            status:'NOT_FOUND'
+          }}
+        }
+        console.log("========================",{err},"\n",'-----------------------',err.message)
+      }).finally(async()=>{
+        console.log({domainDetails:domainDetails})
+        await createSSLService(monitor.id,domainDetails!.ssl)
+        const newDomainDetails = await updateMonitorService(monitor.id,{speed:domainDetails!.speed, 
+          status:domainDetails!.status})
+          return c.json(newDomainDetails)
+      })
+ 
       
     } catch (error:any) {
-      // console.log(error) 
+      console.log(error) 
       c.status(400);
       return c.json({"message":error.message});
     }

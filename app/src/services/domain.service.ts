@@ -109,7 +109,8 @@ export async function getDomainDetails(domain: string) {
 
   } else {
     domainDetails.status = 'OFFLINE';
+    domainDetails.ssl = {status:'NOT_FOUND'};
+    domainDetails.speed="N/A"
   }
- console.log(domainDetails);
  return domainDetails;
 }
