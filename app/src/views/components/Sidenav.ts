@@ -14,7 +14,7 @@ const SideNav = () => html`
         <div class="my-3">
             <h3 class="sidebar-title font-black font-an text-2xl block">WebSentry.</h3>
         </div>
-            <button class="px-5  rounded mb-3 block hover:bg-slate-800 py-2 bg-indigo-600 text-white hover:text-white font-bold">✨ Upgrade</button>
+            <button class="px-5  rounded mb-3 block active:bg-slate-800 py-2 bg-indigo-600 text-white hover:text-white font-bold hover:bg-indigo-800">✨ Upgrade</button>
             <ul class="w-full flex flex-col">
                 ${links.map(link => html`
                     <li class="w-full">

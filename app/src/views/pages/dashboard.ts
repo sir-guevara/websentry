@@ -16,9 +16,7 @@ export default function dashboardPage(monitors:any) {
     }
     return "green"
   }
-const sslStatus = (s:string) =>{
-  
-}
+ 
   return html`
     <div
       class="container mx-auto h-full flex flex-col "
@@ -37,10 +35,70 @@ const sslStatus = (s:string) =>{
         </button>
       </div>
     </div>
+    <!-- header -->
+    <div class="container mx-auto px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 mb-6 gap-4 font-an">
+            <div class="rounded flex border border-1 items-center p-4 bg-white">
+              <div class="mr-3 ">
+              <i data-feather="globe" class="text-gray-100" width="50" height="50"></i>
+              </div>
+           
+              <div class="flex flex-col justify-center items-center ">
+                <span class="text-2xl font-bold">${monitors.length}</span>
+                <span class="text-sm font-bold text-gray-400">Monitors</span>
+              </div>
+            </div>
+            <div class="rounded flex border border-1 items-center p-4 bg-white">
+              <div class="mr-3">
+              <i data-feather="smile" class="text-green-100" width="50" height="50"></i>
+              </div>
+           
+              <div class="flex flex-col justify-center items-center">
+                <span class="text-2xl font-bold text-green-500">${monitors.reduce((acc:number,monitor:any)=>(monitor.status =="ONLINE"?acc+1:acc),0)}</span>
+                <span class="text-sm font-bold text-gray-400">Online</span>
+              </div>
+            </div>
+            <div class="rounded flex border border-1 items-center p-4 bg-white">
+              <div class="mr-3">
+              <i data-feather="frown" class="text-red-100" width="50" height="50"></i>
+              </div>
+           
+              <div class="flex flex-col justify-center items-center">
+                <span class="text-2xl font-bold text-red-500">${monitors.reduce((acc:number,monitor:any)=>(monitor.status =="OFFLINE"?acc+1:acc),0)}</span>
+                <span class="text-sm font-bold text-gray-400">Offline</span>
+              </div>
+            </div>
+            <div class="rounded flex border border-1 items-center p-4 bg-white">
+              <div class="mr-3">
+              <i data-feather="shield" class="text-green-100" width="50" height="50"></i>
+              </div>
+           
+              <div class="flex flex-col justify-center items-center">
+                <span class="text-2xl font-bold">${monitors.reduce((acc:number,monitor:any)=>(monitor.sslStatus =="HEALTHY"?acc+1:acc),0)}</span>
+                <span class="text-sm font-bold text-gray-400">Valid SSL</span>
+              </div>
+            </div>
+            <div class="rounded flex border border-1 items-center p-4 bg-white">
+              <div class="mr-3">
+              <i data-feather="shield-off" class="text-yellow-100" width="50" height="50"></i>
+              </div>
+           
+              <div class="flex flex-col justify-center items-center">
+                <span class="text-2xl font-bold text-yellow-500">${monitors.reduce((acc=0,monitor:any)=>(monitor?.ssl?.status=="EXPIRED"?acc+1:acc),0)}</span>
+                <span class="text-sm font-bold text-gray-400">Expired SSL</span>
+              </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
     <div class="conainer p-4 mx-auto w-full">
-    <div class="flex gap-3">
+    <div class="grid md:grid-cols-3 gap-2 sm:grid-cols-2">
     ${monitors.map( (monitor:any )=> html`
-      <div class='${(monitor.status =="OFFLINE" ? "bg-red-100  ":"bg-white") + " rounded p-6 w-full sm:w-1/2 md:w-1/3 font-an shadow border " + cardBorder(monitor.status) }'>
+      <div class='${(monitor.status =="OFFLINE" ? "bg-red-100  ":"bg-white") + " rounded p-6 w-full font-an shadow border " + cardBorder(monitor.status) }'>
         <p class="text-xs text-slate-400 text-center">last checked 10 minutes ago</p>
         <div class="flex items-center jutify-between gap-2 mt-2 text-slate-600">
           <div class="icon">
@@ -56,22 +114,20 @@ const sslStatus = (s:string) =>{
         </div>
 
         <div class="flex items-center jutify-between gap-2 text-sm mt-2 text-slate-600 font-light">
-          <div class="icon text-${statusColor(monitor.sslStatus)}-500">
-            <i data-feather='${monitor.sslStatus == "HEALTHY"?"shield":"shield-off"}' width="16"></i>
+          <div class="icon text-${statusColor(monitor?.ssl?.status)}-500">
+            <i data-feather='${monitor.ssl?.status == "HEALTHY"?"shield":"shield-off"}' width="16"></i>
           </div>
           <div class="flex items-center justify-between w-full">
-            <h1 class="text-md bg-${statusColor(monitor.sslStatus)}-100  text-${statusColor(monitor.sslStatus)}-600 border border-1 border-${statusColor(monitor.sslStatus)}-500 rounded rounded-full px-2">SSL ${monitor.sslStatus}</h1>
+            <h1 class="text-md bg-${statusColor(monitor.ssl?.status)}-100  text-${statusColor(monitor.ssl?.status)}-600 border border-1 border-${statusColor(monitor.ssl?.status)}-500 rounded rounded-full px-2">SSL ${monitor.ssl?.status}</h1>
           </div>
         </div>
-
-
 
         <div class="flex items-center jutify-between gap-2 text-sm mt-2 text-slate-600 font-light">
           <div class="icon" >
             <i data-feather="clock" width="16"></i>
           </div>
           <div class="flex items-center justify-between w-full">
-            <h1 class="text-md">Response time: <span class="font-semibold"> 0.3s </span></h1>
+            <h1 class="text-md">Response time: <span class="font-semibold"> ${monitor.speed} </span></h1>
           </div>
         </div>
 

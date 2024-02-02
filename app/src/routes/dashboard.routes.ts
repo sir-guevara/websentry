@@ -5,9 +5,10 @@ import AddMonitorPage from "../views/pages/add";
 import StatusPage from "../views/pages/status";
 import SubscriptionPage from "../views/pages/subscription";
 import TeamPage from "../views/pages/team";
-import { addMonitorService, getMonitorService } from "../services/monitor.service";
+import { addMonitorService, createSSLService, getMonitorService, updateMonitorService } from "../services/monitor.service";
 import { CreateMonitorDto } from "../models/monitor.dto";
 import dashboardNewPage from "../views/pages/dashboardNew";
+import { getDomainDetails } from "../services/domain.service";
 
 const dashboardRoute = new Hono();
 dashboardRoute.get("/", async (c) => {
@@ -31,7 +32,10 @@ dashboardRoute.get("/add-monitor", (c) => {
       const data  ={ url:body.url.split('/')[2], userId:user.id};
       
       const monitor = await addMonitorService(data); 
-      return c.json(monitor)
+      const domainDetails = await getDomainDetails(monitor.url)
+      await createSSLService(monitor.id,domainDetails.ssl)
+      const newDomainDetails = await updateMonitorService(monitor.id,{speed:domainDetails.speed, status:domainDetails.status})
+      return c.json(newDomainDetails)
       
     } catch (error:any) {
       // console.log(error) 

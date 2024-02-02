@@ -28,7 +28,8 @@ authRoute
       })
       return c.redirect('/dashboard')
     } catch (error) {
-      return c.json({ error });
+      c.status(400)
+      return c.redirect('/login')
     }
   });
 

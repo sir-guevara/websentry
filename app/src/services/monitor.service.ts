@@ -19,6 +19,9 @@ export const getMonitorService = async (userId:string) => {
         where:{
             userId:userId
         },
+        include:{
+            ssl:true
+        },
         orderBy: {
             createdAt: 'desc',
           },
@@ -44,8 +47,22 @@ export const updateMonitorService = async (id:string, data:any) => {
     })
 }
 
+export const createSSLService = async (id:string, data:any) => {
+    return await prisma.sSL.create({
+        data:{...data, monitorId:id},
+    })
+}
 
-
+export const updateSSLService = async (id:number, data:any) => {
+    return await prisma.sSL.update({
+        where:{
+            id:id
+        },
+        data:{
+          ...data
+        }
+    })
+}
 
 // // Function to verify certificate for the specific service
 // function verifyCertificate(certificate) {

@@ -26,10 +26,26 @@ model Monitor {
   id        String      @id @unique @default(cuid())
   url       String
   name      String?
-  sslStatus String @default("NOT_FOUND")
+  speed     String?
   status    String @default("OFFLINE")
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+  ssl        SSL?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+
+model SSL {
+  id          Int      @id @default(autoincrement())
+  cert        String?
+  issuer      String?
+  country     String?
+  organization String?
+  validFrom   String?
+  validTo     String?
+  status      String   @default("NOT_FOUND")
+  monitor     Monitor  @relation(fields: [monitorId], references: [id])
+  monitorId   String @unique
 }

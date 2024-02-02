@@ -3,7 +3,9 @@ import Layout from "../views/Layout";
 import IndexPage from "../views/pages";
 import { CreateUserDto } from "../models/user.dto";
 import SignupPage from "../views/pages/signup";
-import { signupService } from "../services/user.service";
+import { loginService, signupService } from "../services/user.service";
+import { signJwt } from "../utils/jwt.utils";
+import { setCookie } from "hono/cookie";
 
 const indexRoute = new Hono();
 
@@ -18,13 +20,23 @@ indexRoute
   })
   .post(async (c) => {
     try {
-      const body = (await c.req.parseBody()) as CreateUserDto;
+      const body = (await c.req.json()) as CreateUserDto;
       const user = await signupService({ ...body });
-      return c.json(user);
-    } catch (error) {
+      const {password, ...rest} = user;
+      const token = await signJwt(rest)
+      setCookie(c, 'auth_token',token,{
+        path: '/',
+        secure: true,
+        httpOnly: true,
+        maxAge:  60 * 60 * 24 * 7,
+        sameSite: 'Strict',
+      })
+      c.status(200)
+      return c.redirect('/dashboard')
+    } catch (error:any) {
       console.log(error);
       c.status(400)
-      return c.json({ error });
+      return c.json({message:error.message})
     }
   });
 

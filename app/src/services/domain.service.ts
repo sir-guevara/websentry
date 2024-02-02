@@ -6,6 +6,7 @@ import tls from 'tls';
 
 const domain = 'pawwiki.com';
 
+
 // Function to check if the domain is online
 function isDomainOnline(domain:string) {
   return new Promise((resolve) => {
@@ -15,9 +16,6 @@ function isDomainOnline(domain:string) {
   });
 }
 
-function getDNSDetails(domain:string){
-
-}
 
 function getSSLDetails(domain:string) {
     return new Promise((resolve) => {
@@ -44,49 +42,74 @@ function getSSLDetails(domain:string) {
   }
 
 // Function to measure response speed
-function getResponseSpeed(domain:string, protocol:any) {
-  const start = Date.now();
+async function getResponseSpeed(domain:string, protocol:string) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
 
-  const options = {
-    method: 'GET',
-    hostname: domain,
-    port: protocol === 'https' ? 443 : 80,
-    path: '/',
-  };
+    const options = {
+      method: 'GET',
+      hostname: domain,
+      port: protocol === 'https' ? 443 : 80,
+      path: '/',
+    };
 
-  const req = (protocol === 'https' ? https : http).request(options, (res) => {
-    const end = Date.now();
-    console.log(`Response Speed (${protocol}): ${end - start}ms`);
+    const req = (protocol === 'https' ? https : http).request(options, (res) => {
+      const end = Date.now();
+      const speed = `${((end - start)/1000).toFixed(2)}s`;
+      resolve(speed);
+    });
+
+    req.on('error', (err) => {
+      reject(err);
+    });
+
+    req.end();
   });
-  req.end();
 }
 
   
 // Example usage
-async function getDomainDetails(domain: string) {
+export async function getDomainDetails(domain: string) {
+  const domainDetails: { [key: string]: unknown } = {};
+
   const online = await isDomainOnline(domain);
-
   if (online) {
-    console.log(`Domain ${domain} is online`);
+    domainDetails.status = 'ONLINE';
     const sslDetails = await getSSLDetails(domain);
-
+  
     if (sslDetails) {
         if(sslDetails == 'CERT_HAS_EXPIRED'){
-            console.log(`Domain ${domain} has expired`);
+            domainDetails.ssl = {status:'EXIRED'};
+            domainDetails.speed = await getResponseSpeed(domain, "http")
         }else{
-            console.log('SSL Information:', sslDetails);
+          domainDetails.speed = await getResponseSpeed(domain, "https")
+            domainDetails.ssl = {
+              status:'HEALTHY',
+                 //@ts-ignore
+              cert: sslDetails.subject.CN,
+                 //@ts-ignore
+              issuer: sslDetails.issuer.CN,
+               //@ts-ignore
+              country: sslDetails.issuer.C,
+               //@ts-ignore
+              organization: sslDetails.issuer.O,
+               //@ts-ignore
+              validFrom: sslDetails.valid_from,
+               //@ts-ignore
+              validTo: sslDetails.valid_to,
+  
+          };
         }
       
     }else {
-      console.log('SSL Information not available');
+      domainDetails.ssl = {status:'NOT_FOUND'};
+      domainDetails.speed = await getResponseSpeed(domain, "http")
+
     }
 
-    // Measure response speed for both HTTP and HTTPS
-    getResponseSpeed(domain, 'http');
-    getResponseSpeed(domain, 'https');
   } else {
-    console.log(`Domain ${domain} is offline`);
+    domainDetails.status = 'OFFLINE';
   }
+ console.log(domainDetails);
+ return domainDetails;
 }
-
-getDomainDetails('badssl.com');
