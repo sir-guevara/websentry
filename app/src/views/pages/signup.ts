@@ -10,19 +10,26 @@ const SignupPage =() =>html`
     <h1 class="text-center text-3xl font-bold my-6">Sign up to <span class="">web<span class="bg-clip-text bg-gradient-to-r from-green-400 to-purple-700">Sentry</span></span></h1>
     <form class="w-full max-w-md mx-auto rounded shadow-md p-10 bg-white" method="post" action='/signup' @submit.prevent="submitForm">
         <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            <label class="block text-gray-700 text-xs font-bold mb-2" for="username">
                 EMAIL
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Enter your email address" required v-model="password">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Enter your email address" required v-model="email">
         </div>
         <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            <label class="block text-gray-700 text-xs font-bold mb-2" for="password">
                 PASSWORD
             </label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password" placeholder="Password" required v-model="password">
         </div>
         <div class="flex gap-6 justify-between">
-        <button type="submit" class="py-2 px-6 border rounded bg-purple-800 hover:bg-purple-500 text-white font-an w-full" :class="{isLoading:'animate-pulse'}" :disabled="isLoading"> {{ isLoading ? "loading ...":"sign up"}}</button>
+        <button v-if="!isLoading" type="submit" class="py-2 px-6 border rounded bg-purple-800 hover:bg-purple-500 text-white font-an w-full"> sign up</button>
+        <button v-if="isLoading" type="submit" class="py-2 px-6 border rounded bg-purple-300 hover:bg-purple-500 text-white font-an w-full cursor-not-allowed" disabled> <span class="animate-pulse">loading ...</span></button>
+        </div>
+        <div class="mt-4 text-center text-sm">
+          Already have an account?
+          <a class="underline" href="/login">
+            log in
+          </a>
         </div>
     </form>
 </section>
@@ -42,7 +49,6 @@ import {request} from '../static/api.js'
                   method: 'POST', 
                 });
                 if(json){
-                  toast.success('New monitor added successfully');
                   isLoading.value= false;
                   window.location = "/dashboard"
                 }

@@ -16,7 +16,7 @@ authRoute
   })
   .post(async (c) => {
     try {
-      const body = (await c.req.parseBody()) as CreateUserDto;
+      const body = (await c.req.json()) as CreateUserDto;
       const user = await loginService({ ...body });
       const token = await signJwt(user)
       setCookie(c, 'auth_token',token,{
@@ -26,10 +26,11 @@ authRoute
         maxAge:  60 * 60 * 24 * 7,
         sameSite: 'Strict',
       })
-      return c.redirect('/dashboard')
-    } catch (error) {
+      c.status(200)
+      return c.json("ok")
+    } catch (error:any) {
       c.status(400)
-      return c.redirect('/login')
+      return c.json({message: error.message})
     }
   });
 

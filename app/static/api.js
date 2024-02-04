@@ -5,39 +5,46 @@ var toast = new Notyf({
     y: 'top',
   }
 });
-export async function request(path, { data, method = "GET" })  {
+export function request(path, { data = null,  method = "GET" }) {
+  return fetch(path, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: method !== "GET" && method !== "DELETE" ? JSON.stringify(data) : null,
+  })
+    .then((response) => {
+      // If it is success
+      if (response.ok) {
+        if (method === "DELETE") {
+          // If delete, nothing return
+          return true;
+        }
+        return response.json();
+      }
 
-  const url =  path;
+      // Otherwise, if there are errors
+      return response
+        .json()
+        .then((json) => {
+          // Handle JSON error, response by the server
 
-  const body = (method !== "GET" && method !== "DELETE") ? JSON.stringify(data) : null;
-
-  try {
-    const response = await fetch(url, { method, body });
-
-    if (response.ok) {
-      return method === "DELETE" ? true : response.json();
-    }
-    if(response.status == 403){
-      const json = await response.json()
-     return toast.error(json.message);
-    }
-    const json = await response.json();
-    if(Array.isArray(json.message)){
-      return toast.error(json.message[0]);
-    }
-    throw new Error(JSON.stringify(json));
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error) {
-
-    let emsg=null;
-    if(error?.message){
-      console.log(error);
-      console.log("--------------------------------")
-      console.log(error.message)
-      emsg = JSON.parse(error?.message)?.message;
-    }
-    const errorMessage = emsg || 'An unexpected error occurred.';
-    toast.error(errorMessage);
-  }
+          if (response.status === 400) {
+            // const errors = Object.keys(json).map((k) => `${json[k].join(" ")}`);
+           
+            throw new Error(json.message);
+          }
+          throw new Error(JSON.stringify(json));
+        })
+        .catch((e) => {
+          if (e.name === "SyntaxError") {
+            throw new Error(response.statusText);
+          }
+          throw new Error(e);
+        });
+    })
+    .catch((e) => {
+      // Handle all errors
+      toast.error(e.message);
+    });
 }
-

@@ -16,11 +16,11 @@ export const signupService = async (data: CreateUserDto) => {
 export const loginService = async (data:CreateUserDto) => {
     const user = await prisma.user.findUnique({where:{email: data.email}});
     if(!user){
-        throw new Error("User not found");
+        throw new Error("Invalid login credentials");
     }
     const isMatch = await Bun.password.verify(data.password, user.password);
     if(!isMatch){
-        throw new Error("Invalid password");
+        throw new Error("Invalid login credentials");
     }
     const  {password, ...profile } = user;
     return profile

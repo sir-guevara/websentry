@@ -20,7 +20,7 @@ app.use('/static/*', serveStatic({ root:'./',onNotFound: (path, c) => {
 },}))
 app.use('/favicon.ico', statics)
 
-job.start()
+// job.start()
 
 const port = Bun.env.PORT || 8000;
 export const server = Bun.serve({
