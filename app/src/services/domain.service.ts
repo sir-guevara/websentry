@@ -17,6 +17,7 @@ function isDomainOnline(domain:string) {
 }
 
 
+
 function getSSLDetails(domain:string) {
     return new Promise((resolve) => {
       const options = {
