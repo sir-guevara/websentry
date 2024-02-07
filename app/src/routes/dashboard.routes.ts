@@ -71,9 +71,10 @@ dashboardRoute.get("/team", (c) => {
 dashboardRoute.get("/monitor/:id", async (c) => {
   try {
     const monitor = await getMonitorByIdService(c.req.param('id'));
+    console.log(monitor);
   return c.html(DashboardLayout({title:"Monitor - Dashboard",content:MonitorPage(monitor)}))
   } catch (error) {
-    console.log(error);
+    console.log({error});
     return c.redirect("/dashboard")
   }
   
