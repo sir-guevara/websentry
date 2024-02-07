@@ -31,6 +31,7 @@ const MonitorPage = (monitor:any)=> html`
         </div>
         <div class="p-2">
             <h2 class="text-2xl">SSL Details</h2>
+            list of SSL details
         </div>
     </div>
 `;
