@@ -27,30 +27,30 @@ const MonitorPage = (monitor:any)=> html`
         </div>
 
         <div class="p-2 my-5">
-            <h2 class="text-md">Domain Details</h2>
+            <h2 class="text-md font-black">Domain Details</h2>
         </div>
-        <div class="p-2">
-            <h2 class="text-md">SSL Details</h2>
+        <div class="p-2 bg-white rounded p-5">
+            <h2 class="text-lg mb-5 font-black">SSL Details</h2>
            <ul>
-            <li>
+            <li class="flex justify-between items-center w-full">
                 <span class="text-sm">SSL Status</span>
-                <span class="text-md">${monitor?.ssl?.status}</span>
+                <span class="text-sm font-bold">${monitor?.ssl?.status}</span>
             </li>
-            <li>
+            <li class="flex justify-between items-center w-full">
                 <span class="text-sm">SSL Expires</span>
-                <span class="text-md">${ moment(monitor.ssl.validTo).fromNow() + " - "+ new Date(monitor.ssl.validTo).toLocaleDateString()}</span>
+                <span class="text-sm font-bold">${ moment(monitor.ssl.validTo).fromNow() + " - "+ new Date(monitor.ssl.validTo).toLocaleDateString()}</span>
             </li>
-            <li>
+            <li class="flex justify-between items-center w-full">
                 <span class="text-sm">SSL Issuer</span>
-                <span class="text-md">${monitor?.ssl?.issuer}</span>
+                <span class="text-sm font-bold">${monitor?.ssl?.issuer}</span>
             </li>
-            <li>
+            <li class="flex justify-between items-center w-full">
                 <span class="text-sm">organization</span>
-                <span class="text-md">${monitor?.ssl?.organization}</span>
+                <span class="text-sm font-bold">${monitor?.ssl?.organization}</span>
             </li>
-            <li>
+            <li class="flex justify-between items-center w-full">
                 <span class="text-sm">country</span>
-                <span class="text-md">${monitor?.ssl?.country}</span>
+                <span class="text-sm font-bold">${monitor?.ssl?.country}</span>
             </li>
            </ul>
         </div>
