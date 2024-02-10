@@ -101,7 +101,7 @@ export default function dashboardPage(monitors:any) {
             <i data-feather="globe"></i>
           </div>
           <div class="flex items-center justify-between w-full flex-wrap ">
-            <h1 class="text-lg font-bold text-blue-600 "><a href='${monitor.ssl.status =="HEALTHY"?"https://":"http://"}${monitor.url}' target="_blank">${monitor.url}</a></h1>
+            <h1 class="text-lg font-bold text-blue-600 "><a href='${monitor?.ssl?.status =="HEALTHY"?"https://":"http://"}${monitor.url}' target="_blank">${monitor.url}</a></h1>
             <div class="flex gap-2 items-center border border-2 border-${statusColor(monitor.status)}-400 rounded-2xl px-1">
               <div class="dot bg-${statusColor(monitor.status)}-500 after:bg-${statusColor(monitor.status)}-500"></div>
               <span class="text-sm font-bold font-an">${monitor.status}</span>
