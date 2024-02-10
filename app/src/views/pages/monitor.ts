@@ -1,5 +1,14 @@
 import { html } from "hono/html";
 import moment from 'moment';
+const statusColor= (s:string):string =>{
+    if(s=="ONLINE" || s=="HEALTHY"){
+      return "green"
+    }
+    else if(s=="EXPIRED"){
+      return "yellow"
+    }
+    return "red"
+  }
 const MonitorPage = (monitor:any)=> html`
     <div class="container p-10 h-full">
         <div class="flex">
@@ -8,7 +17,7 @@ const MonitorPage = (monitor:any)=> html`
         <div class="flex items-center">
             <span data-feather="globe" class="mt-5"></span>
             <h2 class="mx-2 text-md mt-5">${monitor?.name && monitor?.name + " - "} ${monitor?.url}</h2>
-            <div class="mt-5 p-1 mx-3 text-sm font-bold text-green-600 border rounded bg-green-200"> ONLINE</div>
+            <div class="mt-5 py-1 px-3 mx-3 text-sm font-bold text-${statusColor(monitor.status)}-600 border rounded bg-${statusColor(monitor.status)}-200"> ${monitor.status}</div>
         </div>
         <br>
         <div class="items-center grid gap-2 grid-cols-3 mt-3">
