@@ -35,9 +35,7 @@ const MonitorPage = (monitor:any)=> html`
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 my-6">
-        <!-- <div class="p-2 bg-white rounded p-5 mt-5">
-            <h2 class="text-md font-black">Domain Details</h2>
-        </div> -->
+       
         <div class="p-2 bg-white rounded p-5 mt-5">
             <h2 class="text-lg mb-5 font-black">SSL Details</h2>
            <ul>
@@ -62,6 +60,9 @@ const MonitorPage = (monitor:any)=> html`
                 <span class="text-sm font-bold">${monitor?.ssl?.country}</span>
             </li>
            </ul>
+        </div>
+         <div class="p-2 bg-white rounded p-5 mt-5">
+            <h2 class="text-md font-black">Alert Settings</h2>
         </div>
     </div>
     </div>
