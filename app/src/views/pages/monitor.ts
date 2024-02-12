@@ -68,9 +68,13 @@ const MonitorPage = (monitor:any)=> html`
                     <div class="for-group">
                         <label class="block text-sm font-medium text-gray-700" for="email">Email</label>
                         <div class="mt-1">
-                            <input type="email" name="email" id="email" autocomplete="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                            <input type="email" name="email" id="email" autocomplete="email" class=" bg-slate-100 shadow-sm py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-400 border rounded-md"">
                         </div>
                     </div>
+                    <div class="for-group mt-4">
+                        <label for="">Phone</label>
+                        <input type="tel" class=" bg-slate-100 shadow-sm py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-400 border rounded-md" >
+</div>
                     </div>
                 </form>
             </div>
