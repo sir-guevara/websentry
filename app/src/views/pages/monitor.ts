@@ -75,6 +75,9 @@ const MonitorPage = (monitor:any)=> html`
                         <label for="">Phone</label>
                         <input type="tel" class=" bg-slate-100 shadow-sm py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-400 border rounded-md" >
 </div>
+  <div class="for-group mt-4">
+    <button class="py-2 px-6 rounded bg-indigo-500 hover:bg-indigo-600">Save</button>
+</div>
                     </div>
                 </form>
             </div>
