@@ -72,7 +72,7 @@ const MonitorPage = (monitor:any)=> html`
                         </div>
                     </div>
                     <div class="for-group mt-4">
-                        <label for="">Phone number</label>
+                        <label for="">Phone</label>
                         <input type="tel" class=" bg-slate-100 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-gray-400 border rounded-md" value="${monitor?.user?.phoneNumber}" >
 </div>
   <div class="for-group mt-4">
